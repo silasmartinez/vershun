@@ -1,28 +1,6 @@
 
 var proto = {
 
-  sessionHas: function (sessionVar, defaultRedirect) {
-    return function (location) {
-      if (typeof (location) === 'undefined') location = defaultRedirect;
-      return function (req, res, next) {
-        req.session[sessionVar] ?
-          next() :
-          res.redirect(location);
-      };
-    };
-  },
-
-  sessionEquals: function ( sessionVar, compareVar, defaultRedirect) {
-    return function (location) {
-      if (typeof (location) === 'undefined') location = defaultRedirect;
-      return function (req, res, next) {
-        (req.session[sessionVar] === compareVar) ?
-          next() :
-          res.redirect(location);
-      };
-    };
-  },
-
   requestUrl: function (url) {
     var urlArr = url.split('/')
     var re = /(v\d+(\.\d)*)/i;
@@ -47,9 +25,7 @@ var proto = {
       if (options.requestUrl) {
         version = _this.requestUrl(req.originalUrl);
       }
-
-      console.log(version)
-
+      
       if (version.url) {
         req.url = version.url;
       }
